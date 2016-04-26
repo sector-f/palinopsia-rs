@@ -1,0 +1,7 @@
+[package]
+name = "palinopsia"
+version = "0.1.0"
+authors = ["Adam <adamsimeth@gmail.com>"]
+
+[dependencies]
+sdl2 = "0.18.0"
