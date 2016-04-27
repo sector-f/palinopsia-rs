@@ -6,6 +6,7 @@ use std::io::{Write, stderr};
 
 use sdl2::pixels;
 use sdl2::render;
+use sdl2::rect;
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 
@@ -79,7 +80,19 @@ fn main() {
                             current -= 10;
                         },
                         Some(Keycode::Space) => {
-                            // Add image save code here
+                            let path = "test.bmp";
+                            let (w, h) = renderer.output_size().unwrap();
+                            println!("Saving frame {}", current);
+                            let mask = pixels::PixelMasks {
+                                bpp: 32,
+                                rmask: 0x00ff,
+                                gmask: 0x0000ff,
+                                bmask: 0x000000ff,
+                                amask: 0xff,
+                            };
+                            let format = pixels::PixelFormatEnum::from_masks(mask);
+                            // let rect = rect::Rect::new(0, 0, w, h);
+                            let pixels = renderer.read_pixels(None, format);
                         },
                         _ => {}
                     }
