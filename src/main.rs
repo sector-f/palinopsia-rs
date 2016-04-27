@@ -66,7 +66,7 @@ fn main() {
             match event {
                 Event::KeyDown { keycode, .. } => {
                     match keycode {
-                        Some(Keycode::Escape) => {
+                        Some(Keycode::Escape) | Some(Keycode::Q) => {
                             break 'running
                         },
                         Some(Keycode::Right) => {
