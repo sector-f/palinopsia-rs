@@ -111,12 +111,11 @@ fn main() {
 
                             let pixels = renderer.read_pixels(None, format).unwrap();
 
-                            let mut image: image::RgbaImage = image::ImageBuffer::from_raw(w, h, pixels).unwrap();
+                            let mut image = image::ImageBuffer::from_raw(w, h, pixels).unwrap();
                             for pixel in image.pixels_mut() {
-                                let mut new_pixel: image::Rgba<u8> = image::Rgba::from_channels(0,0,0,0xff);
+                                let mut new_pixel = image::Rgba::from_channels(0,0,0,0xff);
                                 new_pixel.blend(pixel);
                                 *pixel = new_pixel;
-                                // pixel[3] = 0xff;
                             }
 
                             let encoder = png::PNGEncoder::new(file);
