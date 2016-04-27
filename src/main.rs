@@ -1,15 +1,16 @@
 extern crate sdl2;
+extern crate image;
 
 use std::env::args_os;
 use std::process::exit;
 use std::io::{Write, stderr};
+use std::fs;
 
-use sdl2::pixels;
-use sdl2::render;
-use sdl2::surface;
-use sdl2::rect;
+use sdl2::{pixels, render};
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
+
+use image::png;
 
 fn usage() -> ! {
     let programname = args_os().nth(0).unwrap();
@@ -81,22 +82,14 @@ fn main() {
                             current -= 10;
                         },
                         Some(Keycode::Space) => {
-                            let path = "test.bmp";
-
+                            let path = format!("frame_{}.png", current);
+                            let file = fs::File::create(path).unwrap();
                             let (w, h) = renderer.output_size().unwrap();
-
                             println!("Saving frame {}", current);
-
-
                             let format = pixels::PixelFormatEnum::ARGB8888;
-
-                            // let window_ref = window.deref();
-                            let surface = window.surface(&event_pump).unwrap();
-                            // let surface = surface::Surface::new(w, h, format).unwrap();
-                            renderer.copy(&txt[current as usize], None, None);
-
                             let pixels = renderer.read_pixels(None, format).unwrap();
-                            surface.save_bmp(path);
+                            let encoder = png::PNGEncoder::new(file);
+                            let _ = encoder.encode(&pixels, w, h, image::ColorType::RGBA(8));
                         },
                         _ => {}
                     }
